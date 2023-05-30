@@ -14,13 +14,13 @@ GO
 
 CREATE FUNCTION [dbo].[X_CUENTASMAYORES]
 (
-	@CODIGOCTA char(100)
+	@CODIGOCTA varchar(20)
 )
-RETURNS @cuentas TABLE (codigocta VARCHAR(255), nombrecta VARCHAR(255))
+RETURNS @cuentas TABLE (codigocta varchar(20), nombrecta varchar(100))
 AS
 BEGIN
 	DECLARE @longitud int
-    DECLARE @resultado char(100)
+    DECLARE @resultado varchar(100)
 
 	SET @longitud = LEN(@codigocta) - 1
     SET @resultado = NULL
@@ -44,8 +44,8 @@ GO
 CREATE FUNCTION [dbo].[X_SALDOCUENTA_NIIF_CC]
 (
 @fecha date,
-@cuenta char(200),
-@codcc char(200)
+@cuenta varchar(20),
+@codcc varchar(20)
 )
 RETURNS NUMERIC(17,2)
 AS
@@ -67,16 +67,16 @@ GO
 
 CREATE FUNCTION [dbo].[X_BALANCE_LOGICA_CC]
 (
-	@codcc char(100),
+	@codcc varchar(20),
 	@ano numeric,
 	@periodo numeric
 )
 RETURNS @balance TABLE 
 (
 	ID INT NOT NULL PRIMARY KEY IDENTITY (1,1),
-	CODIGOCTA VARCHAR(255),
-	NOMBRECTA VARCHAR(255),
-	CODCC VARCHAR(255),
+	CODIGOCTA varchar(20),
+	NOMBRECTA varchar(100),
+	CODCC varchar(20),
 	SALDO_INICIAL NUMERIC, 
 	DEBITO NUMERIC, 
 	CREDITO NUMERIC, 
@@ -107,7 +107,7 @@ INSERT INTO @balance
 
 	DECLARE @RowsToProcess  int
 	DECLARE @CurrentRow     int
-	DECLARE @cuentaBuscar   VARCHAR(255)
+	DECLARE @cuentaBuscar   varchar(20)
 
 	SET @RowsToProcess = @@ROWCOUNT
 
@@ -128,7 +128,7 @@ GO
 
 CREATE FUNCTION [dbo].[X_BALANCE_CC]
 (
-	@codcc char(100),
+	@codcc varchar(20),
 	@ano numeric,
 	@periodo numeric
 )
